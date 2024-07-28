@@ -9,4 +9,10 @@ export default class UsersController {
     const result = await this.userService.signup(email, password)
     return response.status(result.statusCode).json(result.data)
   }
+
+  async login({ request, response }: HttpContext) {
+    const { email, password } = request.body()
+    const result = await this.userService.login(email, password)
+    return response.status(result.statusCode).json(result.data)
+  }
 }
