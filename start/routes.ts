@@ -8,6 +8,7 @@
 */
 
 const UsersController = () => import('#controllers/users_controller')
+const CustomersController = () => import('#controllers/customers_controller')
 import router from '@adonisjs/core/services/router'
 
 router.get('/', async () => {
@@ -15,6 +16,16 @@ router.get('/', async () => {
     hello: 'guy',
   }
 })
+
+router.get('/customers', [CustomersController, 'index'])
+
+router.get('/customers/:id', [CustomersController, 'show'])
+
+router.post('/customers', [CustomersController, 'store'])
+
+router.put('/customers/:id', [CustomersController, 'update'])
+
+router.delete('/customers/:id', [CustomersController, 'delete'])
 
 router.post('/signup', [UsersController, 'signup'])
 
