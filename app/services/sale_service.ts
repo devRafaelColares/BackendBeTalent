@@ -1,4 +1,5 @@
 import Sale from '#models/sale'
+import Client from '#models/client'
 import { DateTime } from 'luxon'
 
 export default class SaleService {
@@ -24,6 +25,11 @@ export default class SaleService {
       const saleDate = DateTime.fromFormat(data.saleDate, 'yyyy-MM-dd', { zone: 'utc' })
       if (!saleDate.isValid) {
         return { statusCode: 400, data: { message: 'Invalid date format. Use yyyy-MM-dd.' } }
+      }
+
+      const clientExists = await Client.query().where('id', data.clientId).first()
+      if (!clientExists) {
+        return { statusCode: 404, data: { message: 'Client not found.' } }
       }
 
       const saleData = {
